@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ODD STUDIO Cost Estimator</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">ODD STUDIO</div>
+    <div class="sub noprint" style="margin:0">Cost Estimator</div>
+  </header>
+
+  <div class="tabs noprint" id="mainTabs">
+    <button class="soon" data-pane="plan">1 Plan</button>
+    <button class="soon" data-pane="layout">2 Layout</button>
+    <button class="soon" data-pane="final">3 Final + Mood</button>
+    <button class="on" data-pane="cost">4 Cost</button>
+    <button class="soon" data-pane="ve">5 Value Eng</button>
+    <button class="soon" data-pane="quick">6 Quick Estimate</button>
+  </div>
+
+  <div class="tabpane" id="pane-plan"><div class="soon-box"><h2>1. Plan to drawing: coming next</h2><p>Upload a PDF or JPEG plan, set the scale from one known dimension, trace the walls, and export a DXF that AutoCAD opens and saves as DWG.</p></div></div>
+  <div class="tabpane" id="pane-layout"><div class="soon-box"><h2>2. Concept furniture layout: coming next</h2><p>Drag furniture blocks onto the traced plan at real size and export the layout to DXF.</p></div></div>
+  <div class="tabpane" id="pane-final"><div class="soon-box"><h2>3. Final layout and mood board: coming next</h2><p>Lock a layout, attach mood board images per room, and choose the finish level for each room.</p></div></div>
+  <div class="tabpane" id="pane-ve"><div class="soon-box"><h2>5. Value engineering: coming next</h2><p>When the estimate is over budget, see the swaps that save the most for the least loss in quality.</p></div></div>
+  <div class="tabpane" id="pane-quick"><div class="soon-box"><h2>6. Quick estimate: coming next</h2><p>Paste what Claude reads from a dimension plan, 3D images or site photos, and get an instant range. See docs/claude-prompts.md.</p></div></div>
+
+  <div class="tabpane on" id="pane-cost">
+
+  <div class="banner" id="starterBanner">
+    <b>These are starter rates, not ODD STUDIO's real prices.</b>
+    Open "Rate table" at the bottom and enter your own rates before sending any number to a client.<br>
+    <label><input type="checkbox" id="realRates"> I have entered my real rates</label>
+  </div>
+
+  <div class="print-head">
+    <h1>Ballpark Cost Estimate</h1>
+    <div id="printMeta"></div>
+  </div>
+
+  <h1 class="noprint">Quick Estimator</h1>
+  <p class="sub noprint">Read the plan, pick the finish from the mood board, get a ballpark in seconds. Ballpark only. The final quote comes after the design is confirmed.</p>
+
+  <div class="panel">
+    <h2>1. The project</h2>
+    <div class="grid">
+      <div><label>Client name</label><input id="client" type="text" placeholder="e.g. Ellis"></div>
+      <div><label>Project</label><input id="project" type="text" placeholder="e.g. New home renovation"></div>
+      <div><label>Client budget (RM), optional</label><input id="budget" type="number" min="0" step="1000" placeholder="250000"></div>
+      <div><label>Contingency (%)</label><input id="cont" type="number" min="0" max="50" value="10"></div>
+    </div>
+    <div style="margin-top:14px">
+      <label>Finish level (from the mood board)</label>
+      <div class="tiers" id="tiers"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>2. The works, room by room</h2>
+    <div id="lines"></div>
+    <div class="btns noprint"><button class="btn" id="add">+ Add a line</button></div>
+  </div>
+
+  <div class="panel">
+    <h2>3. The estimate</h2>
+    <table class="room-table" id="roomTable"></table>
+    <div class="sum-row"><span>Subtotal</span><span id="sub">RM 0</span></div>
+    <div class="sum-row"><span>Contingency</span><span id="contAmt">RM 0</span></div>
+    <div class="sum-row big"><span>Estimated total</span><span id="total">RM 0</span></div>
+    <div class="range"><small>Ballpark range (plus or minus 10%)</small><b id="range">RM 0 to RM 0</b></div>
+    <div id="status"></div>
+    <p class="note">This is a ballpark for discussion only, based on the finish level and quantities above. A final quotation follows once the design direction is confirmed.</p>
+    <div class="btns noprint">
+      <button class="btn" id="print">Print / Save as PDF</button>
+      <button class="btn ghost" id="csv">Export to Excel (CSV)</button>
+    </div>
+  </div>
+
+  <div class="panel noprint">
+    <details>
+      <summary>Rate table (edit to your real rates)</summary>
+      <p class="note">Rates are RM per unit for each finish level. They are saved in this browser. Starter rates are placeholders.</p>
+      <div style="overflow-x:auto"><table id="rateTable"></table></div>
+      <div class="btns"><button class="btn ghost" id="resetRates">Reset to starter rates</button></div>
+    </details>
+  </div>
+
+  </div>
+</div>
+
+<script src="data/rates.js"></script>
+<script src="js/estimate.js"></script>
+<script>
+  Array.prototype.forEach.call(document.querySelectorAll("#mainTabs button"), function (b) {
+    b.onclick = function () {
+      Array.prototype.forEach.call(document.querySelectorAll("#mainTabs button"), function (x) { x.classList.toggle("on", x === b); });
+      Array.prototype.forEach.call(document.querySelectorAll(".tabpane"), function (p) { p.classList.toggle("on", p.id === "pane-" + b.getAttribute("data-pane")); });
+    };
+  });
+</script>
+</body>
+</html>
