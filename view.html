@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ODD STUDIO Design Layout</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/view.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">ODD STUDIO</div>
+    <div class="sub" style="margin:0">Design layout for your review</div>
+  </header>
+
+  <div id="msg" class="vmsg">Loading your layout...</div>
+
+  <div id="content" hidden>
+    <h1 id="vTitle"></h1>
+    <p class="sub" id="vSub"></p>
+    <div class="panel"><canvas id="vcanvas" aria-label="Floor plan with furniture layout"></canvas></div>
+    <div id="vRooms"></div>
+    <p class="note">This layout is a design proposal for discussion. Sizes are indicative, and the final design and quotation follow once the direction is confirmed.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="js/viewer.js"></script>
+</body>
+</html>

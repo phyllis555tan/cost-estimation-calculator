@@ -15,6 +15,10 @@ No install and no build step. Open `index.html` in a browser.
 | 5 | Value engineering when over budget | planned |
 | 6 | Instant estimate from dimension plan, 3D images or site photos | planned (Claude prompt in `docs/claude-prompts.md`) |
 
+## Hosting
+
+Deploys to Vercel with Supabase for login, saved projects, rates and client share links. See [DEPLOY.md](DEPLOY.md).
+
 ## Honest limits
 
 - **Rates are placeholders.** `data/rates.js` holds starter numbers, not ODD STUDIO's real prices. The app shows a warning until you confirm you have entered your own rates. Use the prompt in `docs/claude-prompts.md` to build a rate table from your past quotations.
@@ -47,5 +51,12 @@ js/dxf.js         DXF writer
 js/ui.js          tabs, furniture library, Final tab
 data/rates.js     starter rate table (edit this or use the Rate table in the app)
 data/furniture.js standard furniture sizes in mm
+view.html         read-only client page for share links
+js/cloud.js       Supabase login, save, rates, sharing
+js/viewer.js      client page logic
+scripts/build.js  Vercel build step (writes config from environment variables)
+supabase/         database setup (SQL)
+vercel.json       Vercel settings and security headers
+DEPLOY.md         step-by-step hosting guide
 docs/             Claude prompts
 ```

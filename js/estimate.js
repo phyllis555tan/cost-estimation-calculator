@@ -156,4 +156,27 @@
   };
 
   renderTiers(); renderLines(); renderRates(); calc();
+
+  // Small API used by js/cloud.js to save and restore a project and the rate table.
+  window.ODD_EST = {
+    getProject: function () {
+      return { client: $("client").value, project: $("project").value, budget: $("budget").value, cont: $("cont").value, tier: tier, lines: JSON.parse(JSON.stringify(lines)) };
+    },
+    setProject: function (p) {
+      p = p || {};
+      $("client").value = p.client || ""; $("project").value = p.project || ""; $("budget").value = p.budget || ""; $("cont").value = p.cont == null ? 10 : p.cont;
+      if (p.tier === 0 || p.tier === 1 || p.tier === 2) tier = p.tier;
+      lines = (Array.isArray(p.lines) && p.lines.length ? p.lines : [{ room: "", item: "tile", qty: "" }]).filter(function (l) { return rateOf(l.item); });
+      if (!lines.length) lines = [{ room: "", item: "tile", qty: "" }];
+      save(); renderTiers(); renderLines(); calc();
+    },
+    getRates: function () { return { rates: JSON.parse(JSON.stringify(rates)), real: realRates }; },
+    setRates: function (r, real) {
+      var ok = Array.isArray(r) && r.length === DEFAULT_RATES.length && r.every(function (x, i) {
+        return x && x.id === DEFAULT_RATES[i].id && Array.isArray(x.r) && x.r.length === 3 && x.r.every(function (n) { return typeof n === "number" && n >= 0; });
+      });
+      if (!ok) return false;
+      rates = JSON.parse(JSON.stringify(r)); realRates = !!real; save(); renderRates(); renderLines(); calc(); return true;
+    }
+  };
 })();

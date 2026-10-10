@@ -92,3 +92,14 @@ details summary { cursor: pointer; font-weight: 700; }
 .thumb img { height: 110px; border-radius: 6px; border: 1px solid var(--sand); display: block; }
 .thumb button { position: absolute; top: 2px; right: 2px; border: 0; background: rgba(0,0,0,0.6); color: #fff; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; }
 @media print { .boardbar, .noprint { display: none !important; } .boardbox canvas { height: 420px; } .thumb button { display: none; } }
+
+.cloudbar { background: #fff; border: 1px solid var(--sand); border-radius: 8px; padding: 12px; margin-bottom: 14px; }
+.cloudstatus { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; min-height: 1.2em; }
+.cloudstatus.bad { color: var(--bad); }
+.cloudrow { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.cloudrow input { width: auto; flex: 1 1 180px; max-width: 280px; }
+.projrow { padding: 10px 0; border-top: 1px solid var(--sand); display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; margin-top: 8px; }
+.projbtns { display: flex; gap: 6px; flex-wrap: wrap; }
+.sharebox { flex-basis: 100%; display: flex; gap: 6px; flex-wrap: wrap; }
+.sharebox input { flex: 1 1 240px; font-size: 0.8rem; }
+.cloudbar[hidden], #cloudSignedIn[hidden], #cloudSignedOut[hidden] { display: none; }

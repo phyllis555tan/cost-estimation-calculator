@@ -14,6 +14,27 @@
     <div class="sub noprint" style="margin:0">Cost Estimator</div>
   </header>
 
+  <div class="cloudbar noprint" id="cloudBar" hidden>
+    <div class="cloudstatus" id="cloudStatus" role="status"></div>
+    <div id="cloudSignedOut" class="cloudrow">
+      <input id="cloudEmail" type="email" autocomplete="username" placeholder="Email" aria-label="Email">
+      <input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password">
+      <button class="btn small" id="cloudSignIn">Sign in</button>
+    </div>
+    <div id="cloudSignedIn" hidden>
+      <div class="cloudrow">
+        <span class="dim" id="cloudUser"></span>
+        <input id="cloudName" type="text" placeholder="Project name" aria-label="Project name">
+        <button class="btn small" id="cloudSave">Save project</button>
+        <button class="btn ghost small" id="cloudNew">New project</button>
+        <button class="btn ghost small" id="cloudSaveRates">Save my rates</button>
+        <button class="btn ghost small" id="cloudLoadRates">Load my rates</button>
+        <button class="btn ghost small" id="cloudSignOut">Sign out</button>
+      </div>
+      <div id="cloudList"></div>
+    </div>
+  </div>
+
   <div class="tabs noprint" id="mainTabs">
     <button data-pane="plan">1 Plan</button>
     <button data-pane="layout">2 Layout</button>
@@ -57,7 +78,7 @@
         <button class="btn ghost small" id="rotBtn">Rotate 90</button>
         <button class="btn ghost small" id="dupBtn">Duplicate</button>
         <button class="btn ghost small" id="delBtn">Delete</button>
-        <button class="btn ghost small" onclick="ODD.fit()">Fit to screen</button>
+        <button class="btn ghost small" id="fitBtn2">Fit to screen</button>
         <button class="btn small" id="dxfBtn2">Export DXF</button>
       </div>
       <p class="note" id="lockNote" hidden>The final layout is locked. Unlock it in the Final tab to change furniture.</p>
@@ -164,11 +185,14 @@
   <div id="boardBox" class="boardbox"><canvas id="board"></canvas><div id="boardStatus" class="note"></div></div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
 <script src="data/rates.js"></script>
 <script src="data/furniture.js"></script>
 <script src="js/estimate.js"></script>
 <script src="js/dxf.js"></script>
 <script src="js/board.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/cloud.js"></script>
 </body>
 </html>

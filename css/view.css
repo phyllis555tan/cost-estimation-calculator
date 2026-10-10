@@ -1,0 +1,9 @@
+.vmsg { padding: 40px 0; color: var(--muted); text-align: center; }
+.vmsg.bad { color: var(--bad); }
+#vcanvas { width: 100%; height: 440px; display: block; background: #fff; border-radius: 6px; }
+.vroom h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.vroom p { margin: 0 0 6px; color: var(--muted); font-size: 0.92rem; }
+.vroom { margin-bottom: 16px; }
+.vthumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.vthumbs img { height: 150px; max-width: 100%; border-radius: 6px; border: 1px solid var(--sand); }
+@media (max-width: 640px) { #vcanvas { height: 320px; } }

@@ -41,6 +41,7 @@
   $("calApply").onclick = ODD.applyScale;
   $("calDist").onkeydown = function (e) { if (e.key === "Enter") ODD.applyScale(); };
   $("fitBtn").onclick = ODD.fit;
+  $("fitBtn2").onclick = ODD.fit;
   $("clearAll").onclick = function () {
     if (confirm("Clear the plan, rooms and furniture? This cannot be undone.")) ODD.resetAll();
   };
