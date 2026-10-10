@@ -15,17 +15,85 @@
   </header>
 
   <div class="tabs noprint" id="mainTabs">
-    <button class="soon" data-pane="plan">1 Plan</button>
-    <button class="soon" data-pane="layout">2 Layout</button>
-    <button class="soon" data-pane="final">3 Final + Mood</button>
+    <button data-pane="plan">1 Plan</button>
+    <button data-pane="layout">2 Layout</button>
+    <button data-pane="final">3 Final + Mood</button>
     <button class="on" data-pane="cost">4 Cost</button>
     <button class="soon" data-pane="ve">5 Value Eng</button>
     <button class="soon" data-pane="quick">6 Quick Estimate</button>
   </div>
 
-  <div class="tabpane" id="pane-plan"><div class="soon-box"><h2>1. Plan to drawing: coming next</h2><p>Upload a PDF or JPEG plan, set the scale from one known dimension, trace the walls, and export a DXF that AutoCAD opens and saves as DWG.</p></div></div>
-  <div class="tabpane" id="pane-layout"><div class="soon-box"><h2>2. Concept furniture layout: coming next</h2><p>Drag furniture blocks onto the traced plan at real size and export the layout to DXF.</p></div></div>
-  <div class="tabpane" id="pane-final"><div class="soon-box"><h2>3. Final layout and mood board: coming next</h2><p>Lock a layout, attach mood board images per room, and choose the finish level for each room.</p></div></div>
+  <div class="tabpane" id="pane-plan">
+    <h1>1. Plan to drawing</h1>
+    <p class="sub">Upload the plan, set the scale from one known length, then trace the walls and mark the rooms. Everything is stored in millimetres.</p>
+    <div class="panel">
+      <div class="boardbar">
+        <label class="btn small filebtn">Upload plan (JPG, PNG or PDF)<input type="file" id="planFile" accept="image/*,.pdf" hidden></label>
+        <button class="btn ghost small" data-tool="pan">Pan</button>
+        <button class="btn ghost small" data-tool="calibrate">Set scale</button>
+        <button class="btn ghost small" data-tool="wall">Trace wall</button>
+        <button class="btn ghost small" data-tool="room">Mark room</button>
+        <button class="btn ghost small" data-tool="erase">Erase</button>
+        <button class="btn ghost small" id="fitBtn">Fit to screen</button>
+        <button class="btn ghost small" id="clearAll">Clear all</button>
+        <button class="btn small" id="dxfBtn1">Export DXF</button>
+      </div>
+      <div class="calpanel" id="calPanel" hidden>
+        Real distance between the two points:
+        <input id="calDist" type="number" min="0" step="any" style="width:110px">
+        <select id="calUnit" style="width:80px"><option value="mm">mm</option><option value="m">m</option><option value="ft">ft</option></select>
+        <button class="btn small" id="calApply">Apply scale</button>
+      </div>
+      <div class="boardslot" id="slot-plan"></div>
+    </div>
+    <div class="panel"><h2>Rooms</h2><div id="roomList"></div></div>
+  </div>
+  <div class="tabpane" id="pane-layout">
+    <h1>2. Concept furniture layout</h1>
+    <p class="sub">Pick a piece and drag it into place. Sizes are real (mm), so what you see is to scale. Press R to rotate, Delete to remove.</p>
+    <div class="panel">
+      <div class="boardbar">
+        <label class="small"><input type="checkbox" id="snapGrid" checked style="width:auto"> Snap to 50 mm</label>
+        <button class="btn ghost small" id="rotBtn">Rotate 90</button>
+        <button class="btn ghost small" id="dupBtn">Duplicate</button>
+        <button class="btn ghost small" id="delBtn">Delete</button>
+        <button class="btn ghost small" onclick="ODD.fit()">Fit to screen</button>
+        <button class="btn small" id="dxfBtn2">Export DXF</button>
+      </div>
+      <p class="note" id="lockNote" hidden>The final layout is locked. Unlock it in the Final tab to change furniture.</p>
+      <div class="boardslot" id="slot-layout"></div>
+      <p class="note" id="selInfo"></p>
+      <p class="note" id="layoutCount"></p>
+    </div>
+    <div class="panel"><h2>Furniture library</h2>
+      <p class="note">Typical sizes in mm (width x depth). Edit data/furniture.js to match the pieces you really use.</p>
+      <div id="lib"></div>
+      <h2 style="margin-top:16px">Custom size</h2>
+      <div class="grid">
+        <div><label>Name</label><input id="cName" type="text" placeholder="e.g. Study cabinet"></div>
+        <div><label>Width (mm)</label><input id="cW" type="number" min="1" placeholder="1200"></div>
+        <div><label>Depth (mm)</label><input id="cD" type="number" min="1" placeholder="450"></div>
+        <div style="align-self:end"><button class="btn small" id="customAdd">Add to plan</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="tabpane" id="pane-final">
+    <h1>3. Final layout and mood board</h1>
+    <p class="sub">Agree the layout with the client, lock it, and attach the mood board for each room. This is the page that will feed the cost estimate.</p>
+    <div class="panel">
+      <div class="boardbar noprint">
+        <button class="btn small" id="lockBtn">Lock final layout</button>
+        <button class="btn small" id="dxfBtn3">Export DXF</button>
+        <button class="btn ghost small" id="printBtn">Print / Save as PDF</button>
+        <button class="btn ghost small" id="projExport">Export project (JSON)</button>
+        <label class="btn ghost small filebtn">Import project<input type="file" id="projImport" accept=".json,application/json" hidden></label>
+      </div>
+      <div id="lockState" class="status"></div>
+      <div class="banner" id="storeWarn" hidden>Some images were too big to save in the browser. Use "Export project" to keep everything.</div>
+      <div class="boardslot" id="slot-final"></div>
+    </div>
+    <div id="finalRooms"></div>
+  </div>
   <div class="tabpane" id="pane-ve"><div class="soon-box"><h2>5. Value engineering: coming next</h2><p>When the estimate is over budget, see the swaps that save the most for the least loss in quality.</p></div></div>
   <div class="tabpane" id="pane-quick"><div class="soon-box"><h2>6. Quick estimate: coming next</h2><p>Paste what Claude reads from a dimension plan, 3D images or site photos, and get an instant range. See docs/claude-prompts.md.</p></div></div>
 
@@ -92,15 +160,15 @@
   </div>
 </div>
 
+<div id="boardHolder" hidden>
+  <div id="boardBox" class="boardbox"><canvas id="board"></canvas><div id="boardStatus" class="note"></div></div>
+</div>
+
 <script src="data/rates.js"></script>
+<script src="data/furniture.js"></script>
 <script src="js/estimate.js"></script>
-<script>
-  Array.prototype.forEach.call(document.querySelectorAll("#mainTabs button"), function (b) {
-    b.onclick = function () {
-      Array.prototype.forEach.call(document.querySelectorAll("#mainTabs button"), function (x) { x.classList.toggle("on", x === b); });
-      Array.prototype.forEach.call(document.querySelectorAll(".tabpane"), function (p) { p.classList.toggle("on", p.id === "pane-" + b.getAttribute("data-pane")); });
-    };
-  });
-</script>
+<script src="js/dxf.js"></script>
+<script src="js/board.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>

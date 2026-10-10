@@ -71,3 +71,24 @@ details summary { cursor: pointer; font-weight: 700; }
 .soon-box { background: #fff; border: 1px dashed #cfc6b4; border-radius: 8px; padding: 22px; color: var(--muted); }
 .soon-box h2 { color: var(--ink); margin-top: 0; }
 @media print { .tabs, .banner { display: none !important; } }
+
+.boardbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; }
+.btn.small { padding: 7px 11px; font-size: 0.82rem; }
+.btn.ghost.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.filebtn { display: inline-block; cursor: pointer; }
+.boardbox canvas { width: 100%; height: 480px; display: block; border: 1px solid #cfc6b4; border-radius: 6px; background: #fff; touch-action: none; }
+.boardbox .note { margin-top: 6px; min-height: 1.3em; }
+.calpanel { background: #eef6f0; border: 1px solid #b9d9c4; padding: 10px; border-radius: 6px; margin-bottom: 10px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 0.9rem; }
+.calpanel[hidden], .banner[hidden], #lockNote[hidden] { display: none; }
+.libgroup { margin-bottom: 10px; }
+.libtitle { font-size: 0.75rem; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.libgroup .btn { margin: 0 6px 6px 0; }
+.dim { color: var(--muted); font-size: 0.78rem; margin-left: 6px; }
+.roomrow { display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--sand); }
+.roomrow input { max-width: 220px; }
+.finalroom h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.thumb { position: relative; display: inline-block; }
+.thumb img { height: 110px; border-radius: 6px; border: 1px solid var(--sand); display: block; }
+.thumb button { position: absolute; top: 2px; right: 2px; border: 0; background: rgba(0,0,0,0.6); color: #fff; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; }
+@media print { .boardbar, .noprint { display: none !important; } .boardbox canvas { height: 420px; } .thumb button { display: none; } }
